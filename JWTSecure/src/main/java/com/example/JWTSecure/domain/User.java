@@ -1,6 +1,7 @@
 package com.example.JWTSecure.domain;
 
 import com.example.JWTSecure.repo.UserRepo;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @Table(name="Users")
 public class User {
@@ -29,6 +31,7 @@ public class User {
     private String name;
     private String userName;
     private String password;
+    private String email;
     @ManyToMany
     @JoinTable(
             name = "user_role",
@@ -36,12 +39,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "Role_Id"))
     private Set<Role> roles = new HashSet<Role>();
 
-    public User(Long id, String name, String userName, String password, Set<Role> roles) {
+
+    public User(Long id, String name, String userName, String password, String email, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.userName = userName;
         this.password = password;
+        this.email = email;
         this.roles = roles;
     }
-
 }

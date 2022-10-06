@@ -46,33 +46,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         return authenticationManager.authenticate(authenticationToken);
     }
 
-
-
-//    @Bean
-//    @Override
-//    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
-//
-//        Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
-////        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
-//        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-//        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-//
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String pass = passwordEncoder.encode(password);
-//
-//        logger.info("username:" + username);
-//        logger.info("password:" + password);
-//        User user = new User(username, password, grantedAuthorities);
-//
-//        if (!user.getPassword().equals(password)) {
-//            throw new BadCredentialsException("Bad Credentials");
-//        }
-//        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()) ;
-//    }
-
-
     @Bean
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {

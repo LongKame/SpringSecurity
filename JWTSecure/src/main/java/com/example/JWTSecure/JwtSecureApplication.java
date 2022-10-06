@@ -34,8 +34,8 @@ public class JwtSecureApplication {
 //			userService.saveRole(new Role(null,"ROLE_SUPER_ADMIN"));
 //
 //
-//			userService.saveUser(new User(null,"Long Nguyen","LongKame","123456",new HashSet<>()));
-//			userService.saveUser(new User(null,"Long Thanh","LongSaker","123456",new HashSet<>()));
+//			userService.saveUser(new User(null,"Long Nguyen","LongKame","123456","longgiang@gmail.com",new HashSet<>()));
+//			userService.saveUser(new User(null,"Long Thanh","LongSaker","123456","logi@gmail.com",new HashSet<>()));
 //
 //			userService.addRoleToUser("LongKame","ROLE_USER");
 //			userService.addRoleToUser("LongSaker","ROLE_USER");
