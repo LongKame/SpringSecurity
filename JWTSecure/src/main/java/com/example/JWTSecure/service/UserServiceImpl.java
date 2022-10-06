@@ -4,6 +4,7 @@ import com.example.JWTSecure.domain.Role;
 import com.example.JWTSecure.domain.User;
 import com.example.JWTSecure.repo.RoleRepo;
 import com.example.JWTSecure.repo.UserRepo;
+import com.example.JWTSecure.validate.Validate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -75,7 +76,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUserName(username);
+        User user = new User();
+        if(Validate.validateEmail(username)){
+            user = userRepo.findByEmail(username);
+            username = user.getUserName();
+        }else{
+            user = userRepo.findByUserName(username);
+            username = user.getUserName();
+        }
         if (user == null) {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not found in the database");
@@ -83,11 +91,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             log.info("User found in the database: {}", username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         });
+        List<String> list = new ArrayList<>();
+        list.add(user.getUserName());
+        list.add(user.getName());
 
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), authorities);
+        Map<String, String> map = new HashMap<>();
+        map.put("username", user.getUserName());
+        map.put("name", user.getName());
+        return new org.springframework.security.core.userdetails.User(map.toString(), user.getPassword(), authorities);
     }
 }
